@@ -3,23 +3,27 @@
 #include <string>
 using namespace std;
 
+// TODO: need to remake this code using only char* data because of pascal string's lenght value in the data[0].
+// This mistake was caused by misunderstanding how Pascal strings work and a desire to make it simple, albeit inefficient.
+
 class ClassicalPascalString {
 	char* data;
 	int lenght;
 	
 public:
-	//Конструктор по умолчанию
+	//Default constructor
 	ClassicalPascalString() {
 		data = NULL;
 		lenght = 0;
 	}
 
-	//Конструктор
+	//Constructor from strings of chars
 	ClassicalPascalString(const char* data) { 
 		lenght = strlen(data) + 1;
 		this->data = new char[lenght];
 
 		memcpy(this->data, data, lenght);
+//smth to check what has done using Visual Studio macros
 #ifdef _DEBUG
 		cout << endl;
 		cout << "[Debug] Written data is" << this->data << endl;
@@ -28,7 +32,7 @@ public:
 #endif
 	}
 
-	//Конструктор копирования
+	//Copy constructor
 	ClassicalPascalString(const ClassicalPascalString& other_str) {
 		lenght = other_str.lenght;
 		data = new char[lenght];
@@ -42,7 +46,7 @@ public:
 #endif
 	}
 
-	//Деструктор
+	//Destructor
 	~ClassicalPascalString() {
 		delete[] data;
 #ifdef _DEBUG
@@ -51,7 +55,6 @@ public:
 #endif
 	}
 
-	//Присваивание новой строки существующей
 	ClassicalPascalString& operator=(const ClassicalPascalString& other_str) {
 		if (this != &other_str) {
 			delete[] data;
@@ -101,12 +104,12 @@ public:
 		return os;
 	}
 
-	//Длина строки
+	//len method to get array's lenght
 	int len() {
 		return lenght;
 	}
 
-	//Преобразование в строку языка C++ (string)
+	//Method to convert this class' string to C++ string class (<string>)
 	string toString() {
 		string str;
 
@@ -124,7 +127,7 @@ public:
 
 
 int main() {
-
+	// Demo code
 	ClassicalPascalString str1("Very fun string123");
 	ClassicalPascalString str2("Very very fun string456");
 	ClassicalPascalString result;
